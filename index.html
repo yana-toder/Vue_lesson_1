@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width , initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <title>Lesson_1</title>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Lesson_1</h1>
+      <div class="task">
+        <!-----------------Задача 1------------------>
+        <h2>Задача 1</h2>
+        <p>
+          Вводиться кількість пасажирів. Вивести: <br />
+          ●скільки потрібно автобусів (кожен автобус на 20 місць)<br />
+          ●скільки пляшок води (кожному пасажиру 2 пляшки) <br />
+          ●скільки бутербродів (кожному пасажиру 3 бутерброди)
+        </p>
+      </div>
+      <div class="container_app" id="app1">
+        <div>
+          <label>
+            Кількість пасажирів
+            <input type="number" v-model="passengersNumbers" />
+          </label>
+        </div>
+        <div>
+          <div>
+            Скільки потрібно автобусів:
+            <span>{{busesNeeded}}</span>
+          </div>
+        </div>
+        <div>
+          <div>
+            Скільки потрібно пляшок води:
+            <span>{{buttlesNeeded}}</span>
+          </div>
+        </div>
+        <div>
+          <div>
+            Скільки потрібно бутербродів:
+            <span>{{sendwichesNeeded}}</span>
+          </div>
+        </div>
+      </div>
+      <!-----------------Задача 2------------------>
+      <div class="task">
+        <h2>Задача 2</h2>
+        <p>
+          Вводиться номер місяця. Автоматично виводити рекомендований одяг (зима
+          – пальто, літо – шорти ….). Також автоматично виводити зображення з
+          відповідним зображенням лісу (зима – ліс зі снігом, осінь – жовтий
+          ліс, …)
+        </p>
+      </div>
+      <div class="container_app" id="app2">
+        <label class="label">
+          Введіть місяць року для якого хочете отримати рекомендацію
+          <input type="number" v-model="monthNumber" />
+        </label>
+        <p class="parag">{{getRecommendedClothing}}</p>
+        <img
+          :src="getRecommendedImage"
+          style="width: 500px; height: 300px"
+          alt="Nature"
+        />
+      </div>
+      <!-----------------Задача 3------------------>
+      <div class="task">
+        <h2>Задача 3</h2>
+        <p>
+          Задано початок та кінець діапазону. При натисканні на кнопку
+          випадковим чином генерувати значення з вказаного діапазону та
+          відображати його.
+        </p>
+      </div>
+      <div class="container_app" id="app3">
+        <div>
+          <label class="label">
+            Початкове значення :
+            <input type="number" v-model="startValue" />
+          </label>
+          <br />
+          <label>
+            Кінцеве значення :
+            <input type="number" v-model="endValue" />
+          </label>
+          <br />
+          <button class="button" type="button" @click="getRandomNumber">
+            Згенерувати
+          </button>
+          <p>
+            Рандомне число :
+            <span>{{randomNumber}}</span>
+          </p>
+        </div>
+      </div>
+      <!-----------------Задача 4------------------>
+      <div class="task">
+        <h2>Задача 4</h2>
+        <p>
+          “Рахунок у банку” - Спочатку сума дорівнює 0грн. Змінити суму у
+          гривнях можна або зарахуванням на рахунок, або зняттям. - Сума
+          автоматично переводиться у долари та євро (фіксований курс задається у
+          data). - можливість зарахувати суму (контролювати, щоб не була
+          від’ємною) - можливість зняти (щоб не можна зняти більше ніж є на
+          рахунку) - при виконанні зняття і зарахування коштів вираховувати 3%
+          від суми (відображати кількість відсотків автоматично) При зміні суми:
+          - якщо було зняття, то суму відоражати червоним - якщо було
+          зарахування, то суму відображати зеленим - Якщо сума валюти менша за
+          100 то відображати червоним кольором, інакше - зеленим
+        </p>
+      </div>
+      <div class="container_app" id="app4">
+        <div>
+          <p>
+            Сума на рахунку :
+            <span><span>{{currentBalance}} грн</span></span>
+          </p>
+          <label class="label">
+            Зарахувати на рахунок
+            <input type="number" v-model.lazy="addMoney" />
+            <button class="button" @click="addToBalance">Зарахувати</button>
+          </label>
+          <br />
+          <label class="label">
+            Зняти з рахунку
+            <input type="number" v-model="outMoney" />
+            <button class="button" @click="outToBalance">Зняти</button>
+          </label>
+          <br />
+          <div>{{message}}</div>
+          <p>Відсотки за обслуговування : {{comissionPercent}} грн</p>
+          <hr />
+          <p>
+            Сума у доларах:
+            <span class="bg" :style="{color:getBalancesColor}"
+              >{{getDollarSum}}</span
+            >
+            $
+          </p>
+          <p>
+            Сума у євро:
+            <span class="bg" :style="{color:getBalancesColor}"
+              >{{getEuroSum}}</span
+            >
+            €
+          </p>
+        </div>
+      </div>
+      <!-----------------Задача 5------------------>
+      <div class="task">
+        <h2>Задача 5</h2>
+        <p>
+          Додаток містить масив об’єктів (логін, пароль) -- інсуючі логіни і
+          паролі. Користувач вводить логін і пароль, а програма повідомляє чи
+          може користувач бути авторизованим (чи є він одним з масиву).
+        </p>
+      </div>
+      <div class="container_app" id="app5">
+        <label class="label">
+          Login:
+          <input type="text" v-model="login" /> </label
+        ><br />
+        <label class="label">
+          Password:
+          <input type="password" v-model="password" />
+        </label>
+        <br />
+        <button class="button" type="button" @click="isAuthorised">Go</button>
+        <p>{{userMessage}}</p>
+      </div>
+    </div>
+    <script>
+      //========================================================================================================================================================
+
+      //		Задача 1. Вводиться кількість пасажирів. Вивести:
+      //●скільки потрібно автобусів (кожен автобус на 20 місць)
+      //●скільки пляшок води (кожному пасажиру 2 пляшки)
+      //●скільки бутербродів (кожному пасажиру 3 бутерброди)
+      const {createApp} = Vue
+      createApp({
+        data() {
+          return {
+            passengersNumbers: null,
+          }
+        },
+
+        computed: {
+          busesNeeded() {
+            return Math.ceil(this.passengersNumbers / 20)
+          },
+          buttlesNeeded() {
+            return this.passengersNumbers * 2
+          },
+          sendwichesNeeded() {
+            return this.passengersNumbers * 3
+          },
+        },
+        methods: {
+          onFocus() {},
+        },
+      }).mount('#app1')
+      //========================================================================================================================================================
+      //Задача 2. Вводиться номер місяця. Автоматично виводити рекомендований одяг
+      //(зима – пальто, літо – шорти ….).
+      //Також автоматично виводити зображення з відповідним зображенням
+      //лісу (зима – ліс зі снігом, осінь – жовтий ліс, …).
+      const season = {
+        winter: {
+          message:
+            'Зимою рекомендується одягати теплі шапки, шарфи, куртки, в"язані светри, водонепроникні чоботи та теплі шкарпетки для захисту від холоду і снігу.',
+          img: 'img/winter.jpg',
+        },
+        spring: {
+          message:
+            'Весною часто буває прохолодно, тому можливо захочеться мати легку куртку, вітровку або светр з собою для того, щоб захиститися від прохолоди.',
+          img: 'img/spring.jpg',
+        },
+        summer: {
+          message:
+            'Літом рекомендується носити легкий і прохолодний одяг, такий як футболки, шорти, сарафани та сонцезахисні окуляри, для забезпечення комфорту в теплу погоду.',
+          img: 'img/summer.jpg',
+        },
+        autumn: {
+          message:
+            'Осінню рекомендується одягати теплі шарфи, светри, пальто та взуття з водонепроникними підошвами для захисту від прохолоди і дощу.',
+          img: 'img/autumn.jpg',
+        },
+      }
+      createApp({
+        data() {
+          return {
+            monthNumber: null,
+            recommendedImage: null,
+          }
+        },
+
+        computed: {
+          getRecommendedClothing() {
+            switch (this.monthNumber) {
+              case 12:
+              case 1:
+              case 2:
+                return season.winter.message
+              case 3:
+              case 4:
+              case 5:
+                return season.spring.message
+              case 6:
+              case 7:
+              case 8:
+                return season.summer.message
+              case 9:
+              case 10:
+              case 11:
+                return season.autumn.message
+            }
+          },
+          getRecommendedImage() {
+            switch (this.monthNumber) {
+              case 12:
+              case 1:
+              case 2:
+                return season.winter.img
+
+              case 3:
+              case 4:
+              case 5:
+                return season.spring.img
+
+              case 6:
+              case 7:
+              case 8:
+                return season.summer.img
+
+              case 9:
+              case 10:
+              case 11:
+                return season.autumn.img
+              default:
+                return 'img/default.jpg'
+            }
+          },
+        },
+      }).mount('#app2')
+
+      //========================================================================================================================================================
+      // Задача 3. Задано початок та кінець діапазону. При натисканні на
+      // кнопку випадковим чином генерувати значення з вказаного діапазону
+      // та відображати його.
+      createApp({
+        data() {
+          return {
+            startValue: null,
+            endValue: null,
+            randomNumber: 0,
+          }
+        },
+
+        methods: {
+          getRandomNumber() {
+            this.randomNumber =
+              this.startValue +
+              Math.floor(Math.random() * (this.endValue - this.startValue + 1))
+          },
+        },
+      }).mount('#app3')
+
+      //========================================================================================================================================================
+      //		Задача 4. “Рахунок у банку”
+      //Вимоги:
+      //1) Спочатку сума дорівнює 0грн. Змінити суму у гривнях можна або зарахуванням на рахунок,
+      //або зняттям.
+      //2) Сума автоматично переводиться у долари та євро (фіксований курс задається у data).
+      //3) можливість зарахувати суму (контролювати, щоб не була від’ємною)
+      //4) можливість зняти (щоб не можна зняти більше ніж є на рахунку)
+      //5) при виконанні зняття і зарахування коштів вираховувати 3% від суми
+      //(відображати кількість відсотків автоматично)
+
+      //При зміні суми :
+      //- якщо було зняття, то суму відоражати червоним
+      //- якщо було зарахування, то суму відображати зеленим
+      //Якщо сума валюти менша за 100 то відображати червоним кольором, інакше - зеленим
+
+      //p.s. щось з кольорами поки не вийшло((
+
+      const messagesList = [
+        'На вашому рахунку недостатньо коштів',
+        'Кошти успішно зняті з вашого рахунку',
+      ]
+      createApp({
+        data() {
+          return {
+            currentBalance: 0,
+            addMoney: null,
+            outMoney: null,
+            dollarRate: 36,
+            comissionPercent: 0,
+            message: null,
+          }
+        },
+        methods: {
+          addToBalance() {
+            if (this.addMoney > 0) {
+              this.comissionPercent = this.addMoney * 0.03
+              this.currentBalance += this.addMoney - this.comissionPercent
+              this.addMoney = null
+            } else this.addMoney = 0
+          },
+          outToBalance() {
+            if (this.outMoney <= this.currentBalance) {
+              this.comissionPercent = this.outMoney * 0.03
+              this.currentBalance -= this.outMoney - this.comissionPercent
+              this.outMoney = null
+              this.message = messagesList[1]
+              setTimeout(() => {
+                this.message = null
+              }, 2000)
+            } else {
+              this.outMoney = 0
+              this.message = messagesList[0]
+              setTimeout(() => {
+                this.message = null
+              }, 2000)
+            }
+          },
+        },
+        computed: {
+          getDollarSum() {
+            return (this.currentBalance / this.dollarRate).toFixed(2)
+          },
+          getEuroSum() {
+            return (this.getDollarSum / 1.07).toFixed(2)
+          },
+          getComission() {
+            return this.currentBalance * this.comissionPercent
+          },
+          getBalancesColor() {
+            if (this.getDollarSum < 100 || this.getEuroSum < 100) return 'red'
+            else return 'green'
+          },
+        },
+      }).mount('#app4')
+
+      //========================================================================================================================================================
+      //Задача 5
+      // Додаток містить масив об’єктів (логін, пароль) -- інсуючі логіни і паролі.
+      //  Користувач вводить логін і пароль,
+      //  а програма повідомляє чи може користувач
+      //  бути авторизованим (чи є він одним з масиву).
+
+      const users = [
+        {login: 'user1', password: 'password1'},
+        {login: 'user2', password: 'password2'},
+        {login: 'user3', password: 'password3'},
+        {login: 'user4', password: 'password4'},
+        {login: 'user5', password: 'password5'},
+      ]
+      const messageList = [
+        'Логін або пароль невірні',
+        'Можете бути авторизовані',
+      ]
+
+      createApp({
+        data() {
+          return {
+            login: null,
+            password: null,
+            userMessage: null,
+          }
+        },
+
+        methods: {
+          isAuthorised() {
+            const findUser = users.find(
+              (element) =>
+                element.login === this.login &&
+                element.password === this.password
+            )
+            if (findUser) {
+              this.userMessage = messageList[1]
+              this.login = null
+              this.password = null
+            } else {
+              this.userMessage = messageList[0]
+              this.login = null
+              this.password = null
+            }
+          },
+        },
+      }).mount('#app5')
+    </script>
+  </body>
+</html>
